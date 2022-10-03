@@ -1,0 +1,59 @@
+package com.he.ssm;
+
+import cn.hutool.core.date.DateUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+
+import java.util.Date;
+
+/**
+ * @author itaem
+ * date:2021-03-13 2021/3/13:15:20
+ */
+@Slf4j
+class RunTest {
+
+    @Test
+    public void test() throws Exception {
+        for (int i = 0; i < 7; i++) {
+            
+        }
+        log.warn("{}",DateUtil.hour(new Date(),true));
+        String format = DateUtil.format(new Date(), "HHmmssSSS");
+        log.info("{}", Integer.valueOf(format));
+        Date now = new Date();
+        now=DateUtil.offsetDay(now,2);
+        log.info("{}    {}",dayOfWeek(DateUtil.dayOfWeek(now)), DateUtil.dayOfWeek(now));
+    }
+
+    public String dayOfWeek(int day) {
+        String result = "";
+        switch (day) {
+            case 1:
+                result = "星期天";
+                break;
+            case 2:
+                result = "星期一";
+                break;
+
+            case 3:
+                result = "星期二";
+                break;
+            case 4:
+                result = "星期三";
+                break;
+            case 5:
+                result = "星期四";
+                break;
+            case 6:
+                result = "星期五";
+                break;
+            case 7:
+                result = "星期六";
+                break;
+
+        }
+        return result;
+    }
+
+}

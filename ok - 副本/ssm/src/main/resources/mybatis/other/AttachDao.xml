@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.he.ssm.dao.other.AttachDao">
+  <resultMap id="BaseResultMap" type="com.he.ssm.entity.other.Attach">
+    <!--@mbg.generated-->
+    <!--@Table attach-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="attachType" jdbcType="VARCHAR" property="attachType" />
+    <result column="dataId" jdbcType="BIGINT" property="dataId" />
+    <result column="fileName" jdbcType="VARCHAR" property="fileName" />
+    <result column="relativePath" jdbcType="VARCHAR" property="relativePath" />
+    <result column="fileSize" jdbcType="INTEGER" property="fileSize" />
+    <result column="extName" jdbcType="VARCHAR" property="extName" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, attachType, dataId, fileName, relativePath, fileSize, extName, `state`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from attach
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from attach
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.he.ssm.entity.other.Attach" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into attach (attachType, dataId, fileName, 
+      relativePath, fileSize, extName, 
+      `state`)
+    values (#{attachType,jdbcType=VARCHAR}, #{dataId,jdbcType=BIGINT}, #{fileName,jdbcType=VARCHAR}, 
+      #{relativePath,jdbcType=VARCHAR}, #{fileSize,jdbcType=INTEGER}, #{extName,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.he.ssm.entity.other.Attach" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into attach
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="attachType != null and attachType != ''">
+        attachType,
+      </if>
+      <if test="dataId != null">
+        dataId,
+      </if>
+      <if test="fileName != null and fileName != ''">
+        fileName,
+      </if>
+      <if test="relativePath != null and relativePath != ''">
+        relativePath,
+      </if>
+      <if test="fileSize != null">
+        fileSize,
+      </if>
+      <if test="extName != null and extName != ''">
+        extName,
+      </if>
+      <if test="state != null and state != ''">
+        `state`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="attachType != null and attachType != ''">
+        #{attachType,jdbcType=VARCHAR},
+      </if>
+      <if test="dataId != null">
+        #{dataId,jdbcType=BIGINT},
+      </if>
+      <if test="fileName != null and fileName != ''">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="relativePath != null and relativePath != ''">
+        #{relativePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null">
+        #{fileSize,jdbcType=INTEGER},
+      </if>
+      <if test="extName != null and extName != ''">
+        #{extName,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null and state != ''">
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.he.ssm.entity.other.Attach">
+    <!--@mbg.generated-->
+    update attach
+    <set>
+      <if test="attachType != null and attachType != ''">
+        attachType = #{attachType,jdbcType=VARCHAR},
+      </if>
+      <if test="dataId != null">
+        dataId = #{dataId,jdbcType=BIGINT},
+      </if>
+      <if test="fileName != null and fileName != ''">
+        fileName = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="relativePath != null and relativePath != ''">
+        relativePath = #{relativePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null">
+        fileSize = #{fileSize,jdbcType=INTEGER},
+      </if>
+      <if test="extName != null and extName != ''">
+        extName = #{extName,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null and state != ''">
+        `state` = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.he.ssm.entity.other.Attach">
+    <!--@mbg.generated-->
+    update attach
+    set attachType = #{attachType,jdbcType=VARCHAR},
+      dataId = #{dataId,jdbcType=BIGINT},
+      fileName = #{fileName,jdbcType=VARCHAR},
+      relativePath = #{relativePath,jdbcType=VARCHAR},
+      fileSize = #{fileSize,jdbcType=INTEGER},
+      extName = #{extName,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into attach
+    (attachType, dataId, fileName, relativePath, fileSize, extName, `state`)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.attachType,jdbcType=VARCHAR}, #{item.dataId,jdbcType=BIGINT}, #{item.fileName,jdbcType=VARCHAR}, 
+        #{item.relativePath,jdbcType=VARCHAR}, #{item.fileSize,jdbcType=INTEGER}, #{item.extName,jdbcType=VARCHAR}, 
+        #{item.state,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+<!--auto generated by MybatisCodeHelper on 2021-03-10-->
+  <select id="findByIdIn" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from attach
+        where id in
+        <foreach item="item" index="index" collection="idCollection"
+                 open="(" separator="," close=")">
+            #{item,jdbcType=BIGINT}
+        </foreach>
+    </select>
+
+<!--auto generated by MybatisCodeHelper on 2021-03-10-->
+  <delete id="deleteByIdIn">
+    delete from attach
+    where id in
+    <foreach item="item" index="index" collection="idCollection"
+             open="(" separator="," close=")">
+      #{item,jdbcType=BIGINT}
+    </foreach>
+  </delete>
+
+<!--auto generated by MybatisCodeHelper on 2021-03-10-->
+  <select id="findByDataIdAndAttachType" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from attach
+    where dataId=#{dataId,jdbcType=BIGINT} and attachType=#{attachType,jdbcType=VARCHAR}
+  </select>
+
+<!--auto generated by MybatisCodeHelper on 2021-03-10-->
+  <delete id="deleteByDataIdIn">
+    delete from attach
+    where dataId in
+    <foreach item="item" index="index" collection="dataIdCollection"
+             open="(" separator="," close=")">
+      #{item,jdbcType=BIGINT}
+    </foreach>
+  </delete>
+</mapper>

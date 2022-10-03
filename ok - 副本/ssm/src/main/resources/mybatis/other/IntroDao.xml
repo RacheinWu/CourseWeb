@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.he.ssm.dao.other.IntroDao">
+    <!--字段映射-->
+    <resultMap id="BaseResultMap" type="com.he.ssm.entity.other.Intro">
+        <id property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="author"    column="author"    />
+        <result property="content"    column="content"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+    <!--所有字段-->
+    <sql id="Base_Column_List">
+        id, title, content, createTime, type, author
+    </sql>
+    <!--更新-->
+    <update id="updateByPrimaryKey" parameterType="com.he.ssm.entity.other.Intro">
+        update intro set title = #{title},content = #{content}, author = #{author}, createTime = #{createTime}        where id = #{id}
+    </update>
+    <!--查询-->
+    <select id="selectByPrimaryKey" parameterType="com.he.ssm.entity.other.Intro" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from intro
+        where id = #{id}
+    </select>
+
+</mapper>

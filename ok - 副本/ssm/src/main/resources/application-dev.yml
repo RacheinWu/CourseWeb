@@ -1,0 +1,23 @@
+server:
+  port: 9091
+spring:
+  datasource:
+    druid:
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      url: jdbc:log4jdbc:mysql://210.38.139.237:3306/course?useUnicode=true&serverTimezone=Asia/Shanghai&useSSL=false
+      password: Itaem@488
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: false
+        login-username: admin
+        login-password: 123456
+#        allow:
+#        deny:
+he:
+  upload:???
+    ctx: http://210.38.139.237:${server.port}

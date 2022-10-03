@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.he.ssm.dao.other.TestDao">
+    <!--字段映射-->
+    <resultMap id="BaseResultMap" type="com.he.ssm.entity.other.Test">
+        <id property="id"    column="id"    />
+        <result property="international"    column="international"    />
+        <result property="name"    column="name"    />
+        <result property="age"    column="age"    />
+        <result property="birthday"    column="birthday"    />
+        <result property="sex"    column="sex"    />
+        <result property="hobby"    column="hobby"    />
+        <result property="photoUrl"    column="photoUrl"    />
+        <result property="intro"    column="intro"    />
+        <result property="remark"    column="remark"    />
+        <result property="lifePhoto"    column="lifePhoto"    />
+        <result property="others"    column="others"    />
+    </resultMap>
+    <!--所有字段-->
+    <sql id="Base_Column_List">
+         id, international, name, age, birthday, sex, hobby, photoUrl, intro, remark, lifePhoto, others    </sql>
+    <!--插入-->
+    <insert id="insert" parameterType="com.he.ssm.entity.other.Test" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        insert into test_code_gen(international,name,age,birthday,sex,hobby,photoUrl,intro,remark,lifePhoto,others)
+        values(#{international},#{name},#{age},#{birthday},#{sex},#{hobby},#{photoUrl},#{intro},#{remark},#{lifePhoto},#{others})
+    </insert>
+    <!--删除-->
+    <delete id="deleteByPrimaryKey" parameterType="Long">
+        delete from test_code_gen where id = #{id}
+    </delete>
+    <!--删除-->
+    <delete id="deleteByPrimaryKeyIn">
+        delete from test_code_gen where id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <!--更新-->
+    <update id="updateByPrimaryKey" parameterType="com.he.ssm.entity.other.Test">
+        update test_code_gen set international = #{international}, name = #{name}, age = #{age}, birthday = #{birthday}, sex = #{sex}, hobby = #{hobby}, photoUrl = #{photoUrl}, intro = #{intro}, remark = #{remark}, lifePhoto = #{lifePhoto}, others = #{others}        where id = #{id}
+    </update>
+    <!--查询-->
+    <select id="selectByPrimaryKey" parameterType="Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from test_code_gen
+        where id = #{id}
+    </select>
+    <!--查询-->
+    <select id="findByCondition" parameterType="com.he.ssm.entity.other.Test" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from test_code_gen
+        <where>  
+            <if test="international != null  and international != ''"> and international = #{international}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+    <!--查询-->
+    <select id="findUnique" parameterType="com.he.ssm.entity.other.Test" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from test_code_gen
+        <where>
+    <if test="international != null  and international != ''"> and international = #{international}</if>
+    <if test="name != null  and name != ''"> and name = #{name}</if>
+        </where>
+    </select>
+</mapper>
