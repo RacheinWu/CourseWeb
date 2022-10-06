@@ -66,4 +66,6 @@ public class Attach {
      */
     @ApiModelProperty(value = "状态")
     private String state;
+
+    private Integer downloadCount;
 }

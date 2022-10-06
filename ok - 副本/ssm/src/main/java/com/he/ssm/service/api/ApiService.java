@@ -24,7 +24,11 @@ import com.he.ssm.entity.other.Practice;
 import com.he.ssm.entity.other.Teacher;
 import com.he.ssm.entity.other.Video;
 import com.he.ssm.entity.other.Intro;
+import com.he.ssm.redis.RedisService;
+import com.he.ssm.redis.myPrefixKey.CountKey;
+import com.he.ssm.service.other.AttachService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -71,6 +75,10 @@ public class ApiService {
     private MsgcontentDao msgcontentDao;
     @Resource
     private IntroDao introDao;
+    @Autowired
+    private AttachService attachService;
+    @Autowired
+    private RedisService redisService;
 
     public ResultT<IndexResDto> index() {
         String publishState = "发布";
@@ -287,12 +295,22 @@ public class ApiService {
         }
         CoursewareResDto resDto = BeanUtil.toBean(courseware, CoursewareResDto.class);
         List<FileInfo> fileInfoList = new ArrayList<>();
-        List<Attach> attachList = this.attachDao.findByDataIdAndAttachType(id, "courseware");
+//        List<Attach> attachList = this.attachDao.findByDataIdAndAttachType(id, "courseware");
+        //从redis中 同步数据到 mysql中：
+        List<Attach> attachList = this.attachService.lambdaQuery()
+                .eq(Attach::getId, id)
+                .eq(Attach::getAttachType, "courseware")
+                .list();
         for (Attach attach : attachList) {
+            Integer count = redisService.get(CountKey.ATTACK_TOTAL, attach.getRelativePath(), Integer.class);
+            //更新次数:
+            attach.setDownloadCount(count);
             FileInfo fileInfo = BeanUtil.toBean(attach, FileInfo.class);
             fileInfo.setNetworkPath(this.uploadConfig.getHttpPrefix() + attach.getRelativePath());
             fileInfoList.add(fileInfo);
         }
+        //批次更新下载次数
+        attachService.updateBatchById(attachList);
         resDto.setFileInfoList(fileInfoList);
         return ResultT.successWithData(resDto);
     }

@@ -21,12 +21,14 @@ public class FileInfo {
     private String relativePath;
     private String networkPath;
     private String errMsg;
+    private Integer downloadCount;
 
-    public FileInfo(String fileName, Long fileSize, String mimeType, String extName, String relativePath) {
+    public FileInfo(String fileName, Long fileSize, String mimeType, String extName, String relativePath, Integer downloadCount) {
         this.fileName = fileName;
         this.fileSize = fileSize;
         this.mimeType = mimeType;
         this.extName = extName;
         this.relativePath = relativePath;
+        this.downloadCount = downloadCount;
     }
 }

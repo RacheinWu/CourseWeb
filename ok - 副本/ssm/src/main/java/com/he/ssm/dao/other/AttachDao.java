@@ -1,4 +1,5 @@
 package com.he.ssm.dao.other;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.he.ssm.entity.other.Attach;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -11,7 +12,7 @@ import java.util.List;
  * date:2021-03-10 2021/3/10:22:03
  */
 @Mapper
-public interface AttachDao {
+public interface AttachDao extends BaseMapper<Attach> {
     int deleteByPrimaryKey(Long id);
 
     int insert(Attach record);

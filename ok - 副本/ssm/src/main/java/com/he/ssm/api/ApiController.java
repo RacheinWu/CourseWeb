@@ -41,7 +41,6 @@ public class ApiController {
     @Resource
     private ApiService apiService;
 
-
     @ApiOperation("首页")
     @GetMapping("/api/index")
     public ResultT<IndexResDto> index() {

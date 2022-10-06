@@ -36,3 +36,13 @@ he:
     allowMaxFileSize: 1073741824
     allowExt: bmp,gif,jpg,jpeg,png,doc,docx,xls,xlsx,ppt,pptx,html,htm,txt,rar,zip,gz,bz2,pdf,swf,flv ,swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb,mp4
     ctx: http://210.38.139.237:${server.port}
+
+
+redis:
+  host: localhost
+  port: 6379
+  timeout: 10
+  pool-max-wait: 500
+  pool-max-idle: 500
+  pool-max-total: 1000
+
