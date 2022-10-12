@@ -9,6 +9,7 @@ import com.he.ssm.config.UploadConfig;
 import com.he.ssm.dao.other.IntroDao;
 import com.he.ssm.entity.other.Intro;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.xml.transform.Result;
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+@Service
 public class IntroService {
     @Resource
     private UploadConfig uploadConfig;
@@ -33,7 +35,7 @@ public class IntroService {
      * 修改介绍
      */
     public ResultT<Void> update(Intro param) {
-        int id = param.getId();
+        Long id = param.getId();
         Intro intro=new Intro();
         intro.setId(id);
         intro.setTitle(param.getTitle());

@@ -8,6 +8,7 @@ import com.he.ssm.bean.MsgTitleBean;
 import com.he.ssm.bean.ResultT;
 import com.he.ssm.bean.api.CoursewareResDto;
 import com.he.ssm.bean.api.IndexResDto;
+import com.he.ssm.config.InitialConfig;
 import com.he.ssm.config.UploadConfig;
 import com.he.ssm.dao.other.*;
 import com.he.ssm.entity.other.Attach;
@@ -27,6 +28,9 @@ import com.he.ssm.entity.other.Intro;
 import com.he.ssm.redis.RedisService;
 import com.he.ssm.redis.myPrefixKey.CountKey;
 import com.he.ssm.service.other.AttachService;
+import com.he.ssm.service.other.IntroService;
+import com.he.ssm.service.other.VideoService;
+import io.swagger.models.auth.In;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -260,6 +264,9 @@ public class ApiService {
         return ResultT.successWithData(teacher);
     }
 
+//    @Autowired
+//    private VideoService videoService;
+
     public ResultT<Video> videoGet(Long id) {
         Video video = this.videoDao.selectByPrimaryKey(id);
         video.setPhotoUrl(uploadConfig.getHttpPrefix()+video.getPhotoUrl());
@@ -276,6 +283,7 @@ public class ApiService {
             video.setNextId(next.getId());
             video.setNextTitle(next.getTitle());
         }
+        redisService.incr(CountKey.VEDIO_TOTAL, id.toString());
         return ResultT.successWithData(video);
     }
 
@@ -295,22 +303,17 @@ public class ApiService {
         }
         CoursewareResDto resDto = BeanUtil.toBean(courseware, CoursewareResDto.class);
         List<FileInfo> fileInfoList = new ArrayList<>();
-//        List<Attach> attachList = this.attachDao.findByDataIdAndAttachType(id, "courseware");
-        //从redis中 同步数据到 mysql中：
-        List<Attach> attachList = this.attachService.lambdaQuery()
-                .eq(Attach::getId, id)
-                .eq(Attach::getAttachType, "courseware")
-                .list();
+//        List<Attach> attachList = this.attachService.lambdaQuery()
+//                .eq(Attach::getId, id)
+//                .eq(Attach::getAttachType, "courseware")
+//                .list();
+        List<Attach> attachList = this.attachDao.findByDataIdAndAttachType(id, "courseware");
         for (Attach attach : attachList) {
-            Integer count = redisService.get(CountKey.ATTACK_TOTAL, attach.getRelativePath(), Integer.class);
-            //更新次数:
-            attach.setDownloadCount(count);
             FileInfo fileInfo = BeanUtil.toBean(attach, FileInfo.class);
             fileInfo.setNetworkPath(this.uploadConfig.getHttpPrefix() + attach.getRelativePath());
             fileInfoList.add(fileInfo);
+            redisService.incr(CountKey.ATTACK_TOTAL, attach.getId().toString());//
         }
-        //批次更新下载次数
-        attachService.updateBatchById(attachList);
         resDto.setFileInfoList(fileInfoList);
         return ResultT.successWithData(resDto);
     }
@@ -323,8 +326,8 @@ public class ApiService {
         if (StringUtils.isBlank(msgcontent.getMsgType())) {
             msgcontent.setMsgType("留言");
         }
-        int count = this.msgcontentDao.insert(msgcontent);
-        if (count > 0) {
+        int result = this.msgcontentDao.insert(msgcontent);
+        if (result > 0) {
             return ResultT.success();
         }
         return ResultT.error();
@@ -342,15 +345,21 @@ public class ApiService {
     }
 
 
-
+    @Autowired
+    private IntroService introService;
 
     public ResultT<Intro> introGet(Intro param) {
         Intro intro;
+        Long id = param.getId();
         intro = this.introDao.selectByPrimaryKey(param);
+        //redis计数叠加
+        redisService.incr(CountKey.INTRO_TOTAL, String.valueOf(id));
         return ResultT.successWithData(intro);
     }
+
+
     public ResultT<Void> introUpdate(Intro param) {
-        int id = param.getId();
+        Long id = param.getId();
         Intro intro=new Intro();
         intro.setId(id);
         intro.setTitle(param.getTitle());

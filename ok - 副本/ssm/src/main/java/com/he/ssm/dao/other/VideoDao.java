@@ -4,6 +4,7 @@ import com.he.ssm.bean.VideoBean;
 import com.he.ssm.entity.other.Video;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.Collection;
 import java.util.Date;
@@ -16,7 +17,7 @@ import java.util.List;
  * @date 2021-03-08 23:47:16
  */
 @Mapper
-public interface VideoDao {
+public interface VideoDao{
 
     /**
      * 插入视频(其他附件)
@@ -62,5 +63,6 @@ public interface VideoDao {
 
     Video getByPublishDateGreaterThanOrderByPublishDate(@Param("minPublishDate") Date minPublishDate);
 
-
+    @Select("update video set watchingCount=${count} where id = ${id}")
+    void updateCountById(@Param("id") Long id, @Param("count") Long count);
 }

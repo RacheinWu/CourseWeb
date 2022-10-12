@@ -1,7 +1,12 @@
 package com.he.ssm.dao;
 
+import com.he.ssm.dao.other.AttachDao;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Objects;
 
 /**
  * @author itaem
@@ -16,4 +21,15 @@ class UserDaoTest {
     //public void test()throws Exception {
     //    this.userDao.findByNameLike(null);
     //}
+
+    @Autowired
+    private AttachDao attachDao;
+
+    @Test
+    public void rest() {
+        Long idByRU = attachDao.getIdByRU("!31");
+        System.out.println(idByRU);
+    }
+
+
 }

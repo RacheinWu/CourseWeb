@@ -18,7 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Intro {
     @ApiModelProperty(value = "id")
-    private int id;
+    private Long id;
     @ApiModelProperty(value = "author")
     private String author;
     @ApiModelProperty(value = "content")
@@ -33,6 +33,7 @@ public class Intro {
     private transient Date beginPublishDate;
     @JsonIgnore
     private transient Date endPublishDate;
+    private Long watchingCount;
 }
 
 

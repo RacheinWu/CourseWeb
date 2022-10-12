@@ -193,5 +193,8 @@ public class VideoService {
         return ResultT.error();
     }
 
+    public void test() {
+        System.out.println(Objects.isNull(attachDao));
+    }
 
 }

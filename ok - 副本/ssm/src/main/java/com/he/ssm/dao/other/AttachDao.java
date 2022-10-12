@@ -1,8 +1,8 @@
 package com.he.ssm.dao.other;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.he.ssm.entity.other.Attach;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.Collection;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * date:2021-03-10 2021/3/10:22:03
  */
 @Mapper
-public interface AttachDao extends BaseMapper<Attach> {
+public interface AttachDao{
     int deleteByPrimaryKey(Long id);
 
     int insert(Attach record);
@@ -31,10 +31,10 @@ public interface AttachDao extends BaseMapper<Attach> {
     List<Attach> findByDataIdAndAttachType(@Param("dataId")Long dataId,@Param("attachType")String attachType);
     int deleteByDataIdIn(@Param("dataIdCollection")Collection<Long> dataIdCollection);
 
+    @Select("select id from attach where relativePath = '${r}'")
+    Long getIdByRU(@Param("r") String url);
 
-
-
-
-
+    @Select("update attach set downloadCount=${count} where id = ${id}")
+    void updateCountById(@Param("id") Long id, @Param("count") Long count);
 
 }

@@ -1,10 +1,14 @@
 package com.he.ssm.redis;
 
 import com.alibaba.fastjson.JSON;
+import com.he.ssm.redis.myPrefixKey.CountKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class RedisService {
@@ -116,8 +120,19 @@ public class RedisService {
         }
     }
 
-
-
+    /**
+     * 根据前缀获取key
+     */
+    public Set<String> getKeysByPrefix(String prefix) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            return jedis.keys(prefix + "*")
+                    .stream().map(key-> key.replace(prefix, "")).collect(Collectors.toSet());
+        } finally {
+            returnToPool(jedis);
+        }
+    }
 
 
     public static <T> String beanToString(T value) {

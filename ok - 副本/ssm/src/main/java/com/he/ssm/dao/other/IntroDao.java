@@ -3,6 +3,7 @@ package com.he.ssm.dao.other;
 import com.he.ssm.entity.other.Intro;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.Collection;
 import java.util.Date;
@@ -44,6 +45,9 @@ public interface IntroDao {
      * 查询介绍
      */
     List<Intro> findByCondition(Intro intro);
+
+    @Select("update attach set watchingCount=${count} where id = ${id}")
+    void updateCountById(@Param("id") Long id, @Param("count") Long count);
 
 }
 

@@ -1,10 +1,17 @@
 package com.he.ssm;
 
 import cn.hutool.core.date.DateUtil;
+import com.he.ssm.dao.other.AttachDao;
+import com.he.ssm.dao.other.VideoDao;
+import com.he.ssm.service.api.ApiService;
+import com.he.ssm.service.other.VideoService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author itaem
@@ -55,5 +62,4 @@ class RunTest {
         }
         return result;
     }
-
 }

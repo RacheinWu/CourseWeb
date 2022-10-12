@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -21,6 +22,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -183,5 +185,14 @@ public class Config implements WebMvcConfigurer {
             }
             gen.writeString("");
         }
+    }
+
+    @Autowired
+    private FileDownloadRecordInterceptor fileDownloadRecordInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        System.out.println(Objects.isNull(fileDownloadRecordInterceptor));
+        registry.addInterceptor(fileDownloadRecordInterceptor).addPathPatterns("/**");
     }
 }
