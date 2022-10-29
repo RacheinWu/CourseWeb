@@ -1,8 +1,6 @@
 package com.he.ssm.config;
 
-import com.he.ssm.dao.other.AttachDao;
-import com.he.ssm.dao.other.IntroDao;
-import com.he.ssm.dao.other.VideoDao;
+import com.he.ssm.dao.other.*;
 import com.he.ssm.entity.other.Attach;
 import com.he.ssm.entity.other.Intro;
 import com.he.ssm.entity.other.Video;
@@ -48,6 +46,12 @@ public class Schedu {
     @Autowired
     private AttachDao attachService;
 
+    @Autowired
+    private CasesDao casesDao;
+
+    @Autowired
+    private PracticeDao practiceDao;
+
     /**
      * 每隔 一段时间进行 调用
      * 时间 = 5s
@@ -90,6 +94,8 @@ public class Schedu {
             Set<String> videoKeys = redisService.getKeysByPrefix("CountKey:" + CountKey.VEDIO_PREFIX_NAME);
             Set<String> introKeys = redisService.getKeysByPrefix("CountKey:" + CountKey.INTRO_PREFIX_NAME);
             Set<String> attachKeys = redisService.getKeysByPrefix("CountKey:" + CountKey.ATTACH_PREFIX_NAME);
+            Set<String> caseKeys = redisService.getKeysByPrefix("CaseKey:" + CountKey.CASE_PREFIX_NAME);
+            Set<String> practiceKeys = redisService.getKeysByPrefix("PracticeKey:" + CountKey.PRACTICE_PREFIX_NAME);
             System.out.println(attachKeys);
             //从redis中获取数据
             for (String key : videoKeys) {
@@ -110,10 +116,22 @@ public class Schedu {
                 Long count = redisService.get(CountKey.INTRO_TOTAL, key, Long.class);
                 //同步到mysql中
                 redisService.delete(CountKey.INTRO_TOTAL, key);
-                System.out.println(".....");
                 introService.updateCountById(Long.valueOf(key), count);
             }
             //
+            for (String key : caseKeys) {
+                Long count = redisService.get(CountKey.CASE_TOTAL, key, Long.class);
+                //同步到mysql中
+                redisService.delete(CountKey.CASE_TOTAL, key);
+                casesDao.updateCountById(Long.valueOf(key), count);
+            }
+            //
+            for (String key : practiceKeys) {
+                Long count = redisService.get(CountKey.PRACTICE_TOTAL, key, Long.class);
+                //同步到mysql中
+                redisService.delete(CountKey.PRACTICE_TOTAL, key);
+                practiceDao.updateCountById(Long.valueOf(key), count);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;

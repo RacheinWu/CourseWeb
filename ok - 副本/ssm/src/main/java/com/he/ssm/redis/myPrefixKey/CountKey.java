@@ -14,6 +14,8 @@ public class CountKey extends BasePrefix {
     public static final String VEDIO_PREFIX_NAME = "vedio-";
     public static final String WEBSITE_PREFIX_NAME = "vedio-";
     public static final String INTRO_PREFIX_NAME = "intro-";
+    public static final String CASE_PREFIX_NAME = "intro-";
+    public static final String PRACTICE_PREFIX_NAME = "practice-";
 
     /**
      * 防止被外面实例化
@@ -31,8 +33,12 @@ public class CountKey extends BasePrefix {
     public static CountKey VEDIO_TOTAL = new CountKey(TOKEN_EXPIRE, VEDIO_PREFIX_NAME);
     //某个网页的浏览量
     public static CountKey WEBSITE_TOTAL = new CountKey(TOKEN_EXPIRE, WEBSITE_PREFIX_NAME);
-    //某个课程信息的浏览量
+    //某个intro信息的浏览量
     public static CountKey INTRO_TOTAL = new CountKey(TOKEN_EXPIRE, INTRO_PREFIX_NAME);
+    //某个信息的浏览量
+    public static CountKey CASE_TOTAL = new CountKey(TOKEN_EXPIRE, CASE_PREFIX_NAME);
+    //某个practice的浏览量
+    public static CountKey PRACTICE_TOTAL = new CountKey(TOKEN_EXPIRE, PRACTICE_PREFIX_NAME);
     //
 
 }

@@ -3,6 +3,7 @@ package com.he.ssm.dao.other;
 import com.he.ssm.entity.other.Cases;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.Collection;
 import java.util.Date;
@@ -51,7 +52,8 @@ public interface CasesDao{
 
     Cases getByPublishDateGreaterThanOrderByPublishDate(@Param("minPublishDate")Date minPublishDate);
 
-
+    @Select("update cases set watchingCount=${count} where id = ${id}")
+    void updateCountById(@Param("id") Long id, @Param("count") Long count);
 
 
 }

@@ -220,12 +220,14 @@ public class ApiService {
 
     public ResultT<Practice> practiceGet(Long id) {
         Practice practice = this.practiceDao.selectByPrimaryKey(id);
+        redisService.incr(CountKey.PRACTICE_TOTAL, id.toString());
         practice.setPhotoUrl(uploadConfig.getHttpPrefix() + practice.getPhotoUrl());
         return ResultT.successWithData(practice);
     }
 
     public ResultT<Cases> casesGet(Long id) {
         Cases cases = this.casesDao.selectByPrimaryKey(id);
+        redisService.incr(CountKey.CASE_TOTAL, id.toString());
         //关联上一条和下一条信息
         Date publishDate = cases.getPublishDate();
         Cases last = this.casesDao.getByPublishDateLessThanOrderByPublishDateDesc(publishDate);

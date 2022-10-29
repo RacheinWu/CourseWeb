@@ -3,6 +3,7 @@ package com.he.ssm.dao.other;
 import com.he.ssm.entity.other.Practice;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.Collection;
 import java.util.Date;
@@ -49,6 +50,7 @@ public interface PracticeDao{
     List<Practice> findByStateOrderByPublishDateDesc(@Param("search")String search,@Param("state")String state);
 
 
-
+    @Select("update practice set watchingCount=${count} where id = ${id}")
+    void updateCountById(@Param("id") Long id, @Param("count") Long count);
 
 }
