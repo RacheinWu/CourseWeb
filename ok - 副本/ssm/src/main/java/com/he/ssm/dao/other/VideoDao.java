@@ -65,4 +65,7 @@ public interface VideoDao{
 
     @Select("update video set watchingCount=${count} where id = ${id}")
     void updateCountById(@Param("id") Long id, @Param("count") Long count);
+
+    @Select("select * from video where id = ${id}")
+    Video selectById(@Param("id") Long id);
 }

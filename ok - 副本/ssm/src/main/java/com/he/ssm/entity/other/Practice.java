@@ -46,4 +46,6 @@ public class Practice{
     private transient Date beginPublishDate;
     @JsonIgnore
     private transient Date endPublishDate;
+    private Long watchingCount;
+
 }

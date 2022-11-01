@@ -49,6 +49,8 @@ public interface IntroDao {
     @Select("update attach set watchingCount=${count} where id = ${id}")
     void updateCountById(@Param("id") Long id, @Param("count") Long count);
 
+    @Select("select * from intro where id = ${id}")
+    Intro selectById(@Param("id") Long id);
 }
 
 

@@ -4,6 +4,7 @@ import com.he.ssm.bean.CoursewareReqBean;
 import com.he.ssm.entity.other.Courseware;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.Collection;
 import java.util.Date;
@@ -62,5 +63,7 @@ public interface CoursewareDao {
 
     Courseware getByPublishDateGreaterThanOrderByPublishDate(@Param("minPublishDate") Date minPublishDate);
 
+    @Select("select * from courseware where id = ${id}")
+    Courseware selectById(@Param("id") Long id);
 
 }

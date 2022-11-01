@@ -219,14 +219,14 @@ public class ApiService {
     }
 
     public ResultT<Practice> practiceGet(Long id) {
-        Practice practice = this.practiceDao.selectByPrimaryKey(id);
+        Practice practice = this.practiceDao.selectById(id);
         redisService.incr(CountKey.PRACTICE_TOTAL, id.toString());
         practice.setPhotoUrl(uploadConfig.getHttpPrefix() + practice.getPhotoUrl());
         return ResultT.successWithData(practice);
     }
 
     public ResultT<Cases> casesGet(Long id) {
-        Cases cases = this.casesDao.selectByPrimaryKey(id);
+        Cases cases = this.casesDao.selectById(id);
         redisService.incr(CountKey.CASE_TOTAL, id.toString());
         //关联上一条和下一条信息
         Date publishDate = cases.getPublishDate();
@@ -270,7 +270,7 @@ public class ApiService {
 //    private VideoService videoService;
 
     public ResultT<Video> videoGet(Long id) {
-        Video video = this.videoDao.selectByPrimaryKey(id);
+        Video video = this.videoDao.selectById(id);
         video.setPhotoUrl(uploadConfig.getHttpPrefix()+video.getPhotoUrl());
         video.setVideoUrl(uploadConfig.getHttpPrefix()+video.getVideoUrl());
         //关联上一条和下一条信息
@@ -290,7 +290,7 @@ public class ApiService {
     }
 
     public ResultT<Courseware> coursewareGet(Long id) {
-        Courseware courseware = this.coursewareDao.selectByPrimaryKey(id);
+        Courseware courseware = this.coursewareDao.selectById(id);
         //关联上一条和下一条信息
         Date publishDate = courseware.getPublishDate();
         Courseware last = this.coursewareDao.getByPublishDateLessThanOrderByPublishDateDesc(publishDate);
@@ -353,7 +353,8 @@ public class ApiService {
     public ResultT<Intro> introGet(Intro param) {
         Intro intro;
         Long id = param.getId();
-        intro = this.introDao.selectByPrimaryKey(param);
+//        intro = this.introDao.selectByPrimaryKey(param);
+        intro = this.introDao.selectById(id);
         //redis计数叠加
         redisService.incr(CountKey.INTRO_TOTAL, String.valueOf(id));
         return ResultT.successWithData(intro);

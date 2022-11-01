@@ -53,4 +53,6 @@ public interface PracticeDao{
     @Select("update practice set watchingCount=${count} where id = ${id}")
     void updateCountById(@Param("id") Long id, @Param("count") Long count);
 
+    @Select("select * from practice where id = ${id}")
+    Practice selectById(@Param("id") Long id);
 }
