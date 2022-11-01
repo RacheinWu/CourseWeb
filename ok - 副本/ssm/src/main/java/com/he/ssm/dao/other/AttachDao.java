@@ -1,5 +1,6 @@
 package com.he.ssm.dao.other;
 import com.he.ssm.entity.other.Attach;
+import com.he.ssm.entity.other.Video;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -31,8 +32,8 @@ public interface AttachDao{
     List<Attach> findByDataIdAndAttachType(@Param("dataId")Long dataId,@Param("attachType")String attachType);
     int deleteByDataIdIn(@Param("dataIdCollection")Collection<Long> dataIdCollection);
 
-    @Select("select id from attach where relativePath = '${r}'")
-    Long getIdByRU(@Param("r") String url);
+    @Select("select id, downloadCount from attach where relativePath = '${r}'")
+    Attach getIdAndCountByRU(@Param("r") String url);
 
     @Select("update attach set downloadCount=${count} where id = ${id}")
     void updateCountById(@Param("id") Long id, @Param("count") Long count);

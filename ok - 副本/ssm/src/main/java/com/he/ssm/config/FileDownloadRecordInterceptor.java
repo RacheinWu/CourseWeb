@@ -3,6 +3,7 @@ package com.he.ssm.config;
 import com.he.ssm.dao.other.AttachDao;
 //import com.he.ssm.dao.other.MyDao;
 import com.he.ssm.entity.other.Attach;
+import com.he.ssm.entity.other.Video;
 import com.he.ssm.redis.RedisService;
 import com.he.ssm.redis.myPrefixKey.CountKey;
 import com.he.ssm.service.other.AttachService;
@@ -46,8 +47,11 @@ public class FileDownloadRecordInterceptor implements HandlerInterceptor {
                 else {
                     //redis + 1
                     String url = requestURI.replace("/static/res/", "");
-                    Long id = attachDao.getIdByRU(url);
-                    redisService.incr(CountKey.ATTACK_TOTAL, id.toString());
+                    Attach attach = attachDao.getIdAndCountByRU(url);
+                    if (!redisService.exists(CountKey.ATTACK_TOTAL, attach.getId().toString())) {
+                        redisService.set(CountKey.ATTACK_TOTAL, attach.getId().toString(), attach.getDownloadCount());
+                    }
+                    redisService.incr(CountKey.ATTACK_TOTAL, attach.getId().toString());
                 }
             } catch (Exception e) {
                 log.warn("找不到对应的文件...");

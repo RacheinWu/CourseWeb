@@ -94,9 +94,8 @@ public class Schedu {
             Set<String> videoKeys = redisService.getKeysByPrefix("CountKey:" + CountKey.VEDIO_PREFIX_NAME);
             Set<String> introKeys = redisService.getKeysByPrefix("CountKey:" + CountKey.INTRO_PREFIX_NAME);
             Set<String> attachKeys = redisService.getKeysByPrefix("CountKey:" + CountKey.ATTACH_PREFIX_NAME);
-            Set<String> caseKeys = redisService.getKeysByPrefix("CaseKey:" + CountKey.CASE_PREFIX_NAME);
-            Set<String> practiceKeys = redisService.getKeysByPrefix("PracticeKey:" + CountKey.PRACTICE_PREFIX_NAME);
-            System.out.println(attachKeys);
+            Set<String> caseKeys = redisService.getKeysByPrefix("CountKey:" + CountKey.CASE_PREFIX_NAME);
+            Set<String> practiceKeys = redisService.getKeysByPrefix("CountKey:" + CountKey.PRACTICE_PREFIX_NAME);
             //从redis中获取数据
             for (String key : videoKeys) {
                 Long count = redisService.get(CountKey.VEDIO_TOTAL, key, Long.class);

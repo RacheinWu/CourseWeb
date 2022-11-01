@@ -25,11 +25,6 @@ class UserDaoTest {
     @Autowired
     private AttachDao attachDao;
 
-    @Test
-    public void rest() {
-        Long idByRU = attachDao.getIdByRU("!31");
-        System.out.println(idByRU);
-    }
 
 
 }
