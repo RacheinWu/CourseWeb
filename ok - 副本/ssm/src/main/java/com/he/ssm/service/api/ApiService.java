@@ -220,6 +220,13 @@ public class ApiService {
 
     public ResultT<Practice> practiceGet(Long id) {
         Practice practice = this.practiceDao.selectById(id);
+        //redis计数叠加
+        //先从redis中获取有没有这个数据
+        boolean exists = redisService.exists(CountKey.PRACTICE_TOTAL, id.toString());
+        if (!exists) {
+            //没有的话，就同步mysql
+            redisService.set(CountKey.PRACTICE_TOTAL, id.toString(), practice.getWatchingCount());
+        }
         redisService.incr(CountKey.PRACTICE_TOTAL, id.toString());
         practice.setPhotoUrl(uploadConfig.getHttpPrefix() + practice.getPhotoUrl());
         return ResultT.successWithData(practice);
@@ -227,6 +234,13 @@ public class ApiService {
 
     public ResultT<Cases> casesGet(Long id) {
         Cases cases = this.casesDao.selectById(id);
+        //redis计数叠加
+        //先从redis中获取有没有这个数据
+        boolean exists = redisService.exists(CountKey.CASE_TOTAL, id.toString());
+        if (!exists) {
+            //没有的话，就同步mysql
+            redisService.set(CountKey.CASE_TOTAL, id.toString(), cases.getWatchingCount());
+        }
         redisService.incr(CountKey.CASE_TOTAL, id.toString());
         //关联上一条和下一条信息
         Date publishDate = cases.getPublishDate();
@@ -285,7 +299,14 @@ public class ApiService {
             video.setNextId(next.getId());
             video.setNextTitle(next.getTitle());
         }
-        redisService.incr(CountKey.VEDIO_TOTAL, id.toString());
+        //redis计数叠加
+        //先从redis中获取有没有这个数据
+        boolean exists = redisService.exists(CountKey.VEDIO_TOTAL, video.getId().toString());
+        if (!exists) {
+            //没有的话，就同步mysql
+            redisService.set(CountKey.VEDIO_TOTAL, video.getId().toString(), video.getWatchingCount());
+        }
+        redisService.incr(CountKey.VEDIO_TOTAL, video.getId().toString());
         return ResultT.successWithData(video);
     }
 
@@ -305,15 +326,19 @@ public class ApiService {
         }
         CoursewareResDto resDto = BeanUtil.toBean(courseware, CoursewareResDto.class);
         List<FileInfo> fileInfoList = new ArrayList<>();
-//        List<Attach> attachList = this.attachService.lambdaQuery()
-//                .eq(Attach::getId, id)
-//                .eq(Attach::getAttachType, "courseware")
-//                .list();
+
         List<Attach> attachList = this.attachDao.findByDataIdAndAttachType(id, "courseware");
         for (Attach attach : attachList) {
             FileInfo fileInfo = BeanUtil.toBean(attach, FileInfo.class);
             fileInfo.setNetworkPath(this.uploadConfig.getHttpPrefix() + attach.getRelativePath());
             fileInfoList.add(fileInfo);
+            //redis计数叠加
+            //先从redis中获取有没有这个数据
+            boolean exists = redisService.exists(CountKey.INTRO_TOTAL, String.valueOf(id));
+            if (!exists) {
+                //没有的话，就同步mysql
+                redisService.set(CountKey.ATTACK_TOTAL, attach.getId().toString(), attach.getDownloadCount());
+            }
             redisService.incr(CountKey.ATTACK_TOTAL, attach.getId().toString());//
         }
         resDto.setFileInfoList(fileInfoList);
@@ -356,6 +381,12 @@ public class ApiService {
 //        intro = this.introDao.selectByPrimaryKey(param);
         intro = this.introDao.selectById(id);
         //redis计数叠加
+        //先从redis中获取有没有这个数据
+        boolean exists = redisService.exists(CountKey.INTRO_TOTAL, String.valueOf(id));
+        if (!exists) {
+            //没有的话，就同步mysql
+            redisService.set(CountKey.INTRO_TOTAL, String.valueOf(id), intro.getWatchingCount());
+        }
         redisService.incr(CountKey.INTRO_TOTAL, String.valueOf(id));
         return ResultT.successWithData(intro);
     }

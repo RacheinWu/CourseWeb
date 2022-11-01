@@ -46,7 +46,7 @@ public interface IntroDao {
      */
     List<Intro> findByCondition(Intro intro);
 
-    @Select("update attach set watchingCount=${count} where id = ${id}")
+    @Select("update intro set watchingCount=${count} where id = ${id}")
     void updateCountById(@Param("id") Long id, @Param("count") Long count);
 
     @Select("select * from intro where id = ${id}")
