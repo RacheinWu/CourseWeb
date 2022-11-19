@@ -9,11 +9,12 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       driver-class-name: com.mysql.jdbc.Driver
-#      url: jdbc:mysql://210.38.139.237:3306/course?useUnicode=true&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
-      url: jdbc:mysql:///course?useUnicode=true&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://210.38.139.237:3306/course?useUnicode=true&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+#      url: jdbc:mysql:///course?useUnicode=true&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
       username: root
-#      password: Itaem@488
-      password: wuyuanjian0
+      password: Itaem@488
+#      password: wuyuanjian0
+#      password: itaem488
       initial-size: 5
       validation-query: 'select 1'
   jackson:
@@ -53,4 +54,5 @@ redis:
   pool-max-wait: 500
   pool-max-idle: 500
   pool-max-total: 1000
+#  password: itaem488
 

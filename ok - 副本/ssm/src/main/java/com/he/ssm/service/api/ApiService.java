@@ -8,7 +8,6 @@ import com.he.ssm.bean.MsgTitleBean;
 import com.he.ssm.bean.ResultT;
 import com.he.ssm.bean.api.CoursewareResDto;
 import com.he.ssm.bean.api.IndexResDto;
-import com.he.ssm.config.InitialConfig;
 import com.he.ssm.config.UploadConfig;
 import com.he.ssm.dao.other.*;
 import com.he.ssm.entity.other.Attach;
@@ -29,8 +28,6 @@ import com.he.ssm.redis.RedisService;
 import com.he.ssm.redis.myPrefixKey.CountKey;
 import com.he.ssm.service.other.AttachService;
 import com.he.ssm.service.other.IntroService;
-import com.he.ssm.service.other.VideoService;
-import io.swagger.models.auth.In;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -236,12 +233,12 @@ public class ApiService {
         Cases cases = this.casesDao.selectById(id);
         //redis计数叠加
         //先从redis中获取有没有这个数据
-        boolean exists = redisService.exists(CountKey.CASE_TOTAL, id.toString());
+        boolean exists = redisService.exists(CountKey.CASES_TOTAL, id.toString());
         if (!exists) {
             //没有的话，就同步mysql
-            redisService.set(CountKey.CASE_TOTAL, id.toString(), cases.getWatchingCount());
+            redisService.set(CountKey.CASES_TOTAL, id.toString(), cases.getWatchingCount());
         }
-        redisService.incr(CountKey.CASE_TOTAL, id.toString());
+        redisService.incr(CountKey.CASES_TOTAL, id.toString());
         //关联上一条和下一条信息
         Date publishDate = cases.getPublishDate();
         Cases last = this.casesDao.getByPublishDateLessThanOrderByPublishDateDesc(publishDate);
@@ -330,16 +327,9 @@ public class ApiService {
         List<Attach> attachList = this.attachDao.findByDataIdAndAttachType(id, "courseware");
         for (Attach attach : attachList) {
             FileInfo fileInfo = BeanUtil.toBean(attach, FileInfo.class);
-            fileInfo.setNetworkPath(this.uploadConfig.getHttpPrefix() + attach.getRelativePath());
+//            fileInfo.setNetworkPath(this.uploadConfig.getHttpPrefix() + "cases/" + attach.getRelativePath());
+            fileInfo.setNetworkPath(this.uploadConfig.getCtx() + "/cases" + uploadConfig.getDirResourcePath() + "/" + attach.getRelativePath());
             fileInfoList.add(fileInfo);
-            //redis计数叠加
-            //先从redis中获取有没有这个数据
-            boolean exists = redisService.exists(CountKey.INTRO_TOTAL, String.valueOf(id));
-            if (!exists) {
-                //没有的话，就同步mysql
-                redisService.set(CountKey.ATTACK_TOTAL, attach.getId().toString(), attach.getDownloadCount());
-            }
-            redisService.incr(CountKey.ATTACK_TOTAL, attach.getId().toString());//
         }
         resDto.setFileInfoList(fileInfoList);
         return ResultT.successWithData(resDto);

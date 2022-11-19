@@ -12,10 +12,11 @@
     <result column="fileSize" jdbcType="INTEGER" property="fileSize" />
     <result column="extName" jdbcType="VARCHAR" property="extName" />
     <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="downloadCount" jdbcType="INTEGER" property="downloadCount" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, attachType, dataId, fileName, relativePath, fileSize, extName, `state`
+    id, attachType, dataId, fileName, relativePath, fileSize, extName, `state`, downloadCount
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->

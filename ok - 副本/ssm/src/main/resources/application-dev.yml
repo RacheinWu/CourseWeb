@@ -4,9 +4,10 @@ spring:
   datasource:
     druid:
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-      url: jdbc:log4jdbc:mysql:///course?useUnicode=true&serverTimezone=Asia/Shanghai&useSSL=false
-#      password: Itaem@488
-      password: wuyuanjina0
+      url: jdbc:log4jdbc:mysql://localhost:3306/course?useUnicode=true&serverTimezone=Asia/Shanghai&useSSL=false
+      password: Itaem@488
+#      password: wuyuanjina0
+#      password: itaem488
       web-stat-filter:
         enabled: true
         url-pattern: /*

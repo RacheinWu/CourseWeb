@@ -261,7 +261,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.7.RELEASE</version>
                 <configuration>
-                    <mainClass>com.rachein.mmzf2.Mmzf2Application</mainClass>
+                    <mainClass>com.he.ssm.Run</mainClass>
                 </configuration>
                 <executions>
                     <execution>

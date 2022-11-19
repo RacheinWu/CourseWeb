@@ -62,4 +62,10 @@ class RunTest {
         }
         return result;
     }
+
+    @Test
+    public void t12() {
+        String s = "http://210.38.139.237:9091/static/res/2022/01/05/132634966_%E6%95%99%E5%AD%A6%E8%B5%84%E6%BA%90.docx";
+        System.out.println(s.contains("static/res/"));
+    }
 }

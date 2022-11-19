@@ -29,8 +29,14 @@ public interface AttachDao{
     int batchInsert(@Param("list") List<Attach> list);
     List<Attach> findByIdIn(@Param("idCollection")Collection<Long> idCollection);
     int deleteByIdIn(@Param("idCollection")Collection<Long> idCollection);
+
     List<Attach> findByDataIdAndAttachType(@Param("dataId")Long dataId,@Param("attachType")String attachType);
+
     int deleteByDataIdIn(@Param("dataIdCollection")Collection<Long> dataIdCollection);
+
+    @Select("select * from attach where dataId=${dataId} and attachType=${attachType}")
+    List<Attach> findByDataIdAndAttachType2(@Param("dataId")Long dataId,@Param("attachType")String attachType);
+
 
     @Select("select id, downloadCount from attach where relativePath = '${r}'")
     Attach getIdAndCountByRU(@Param("r") String url);

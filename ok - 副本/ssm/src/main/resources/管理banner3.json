@@ -1,0 +1,39 @@
+[
+  {
+    "path": "/show",
+    "name": "show",
+    "meta": {
+      "title": "课程信息"
+    },
+    "children": [
+      {
+        "path": "/cinfo",
+        "name": "cinfo",
+        "meta": {
+          "title": "课程介绍"
+        }
+      },
+      {
+        "path": "/historyChange",
+        "name": "historyChange",
+        "meta": {
+          "title": "历史沿革"
+        }
+      },
+      {
+        "path": "/build",
+        "name": "build",
+        "meta": {
+          "title": "建设规划"
+        }
+      },
+      {
+        "path": "/tmethod",
+        "name": "tmethod",
+        "meta": {
+          "title": "教学方法"
+        }
+      }
+    ]
+  }
+]

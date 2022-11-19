@@ -89,6 +89,7 @@ public class CoursewareService {
         if ("发布".equals(req.getState())) {
             req.setPublishDate(new Date());
         }
+        req.setCoursewareUrl(req.getUploadFileList().get(0).getRelativePath());
         req.setCreateDate(new Date());
         int count = this.coursewareDao.insert(req);
         if (count > 0) {

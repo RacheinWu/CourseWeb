@@ -1,0 +1,182 @@
+[
+    {
+        "path": "/show2",
+        "name": "show2",
+        "meta": {
+            "title": "课程信息"
+        },
+        "children": [
+            {
+                "path": "/cinfo",
+                "name": "cinfo",
+                "meta": {
+                    "title": "课程介绍"
+                }
+            },
+            {
+                "path": "/historyChange",
+                "name": "historyChange",
+                "meta": {
+                    "title": "历史沿革"
+                }
+            },
+            {
+                "path": "/build",
+                "name": "build",
+                "meta": {
+                    "title": "建设规划"
+                }
+            },
+            {
+                "path": "/tmethod",
+                "name": "tmethod",
+                "meta": {
+                    "title": "教学方法"
+                }
+            }
+        ]
+    },
+    {
+        "path": "/edu",
+        "name": "edu",
+        "meta": {
+            "title": "教学团队"
+        },
+        "children": [
+            {
+                "path": "/teacher",
+                "name": "teacher",
+                "meta": {
+                    "title": "课程负责人"
+                }
+            }
+        ]
+    },
+    {
+        "path": "/edu2",
+        "name": "edu2",
+        "meta": {
+            "title": "教学资源"
+        },
+        "children": [
+            {
+                "path": "/courseware",
+                "name": "courseware",
+                "meta": {
+                    "title": "教学课件"
+                }
+            },
+            {
+                "path": "/video",
+                "name": "video",
+                "meta": {
+                    "title": "教学视频"
+                }
+            }
+        ]
+    },
+    {
+        "path": "",
+        "name": "",
+        "meta": {
+            "title": "扩展交流"
+        },
+        "children" : [
+            {
+                "path": "/news",
+                "name": "news",
+                "meta": {
+                    "title": "媒体报道"
+                }
+            },
+            {
+                "path": "/cases",
+                "name": "cases",
+                "meta": {
+                    "title": "案例解读"
+                }
+            }
+        ]
+    },
+    {
+        "path" : "/show",
+        "name" : "show",
+        "meta" : {
+            "title" : "教学成果"
+        },
+        "children" : [
+            {
+                "path": "/rshow",
+                "name": "rshow",
+                "meta": {
+                    "title": "成果展示"
+                }
+            }
+        ]
+    },
+    {
+        "path": "/msg",
+        "name": "msg",
+        "meta": {
+            "title": "互动交流"
+        },
+        "children": [
+            {
+                "path": "/notice",
+                "name": "notice",
+                "meta": {
+                    "title": "课程通知"
+                }
+            },
+            {
+                "path": "/title",
+                "name": "title",
+                "meta": {
+                    "title": "互动管理"
+                }
+            },
+            {
+                "path": "/content",
+                "name": "content",
+                "meta": {
+                    "title": "平台留言"
+                }
+            }
+        ]
+    },
+    {
+        "path": "/practice",
+        "name": "practice",
+        "meta": {
+            "title": "实践教学"
+        }
+    },
+    {
+        "path": "/experience",
+        "name": "experience",
+        "meta": {
+            "title": "经验借鉴管理"
+        }
+    },
+    {
+        "path": "/banner",
+        "name": "banner",
+        "meta": {
+            "title": "轮播图管理"
+        }
+    },
+    {
+        "path": "/user",
+        "name": "user",
+        "meta": {
+            "title": "用户管理"
+        }
+    },
+    {
+        "path": "/policy",
+        "name": "policy",
+        "meta": {
+            "title": "政策措施管理"
+        }
+    }
+]

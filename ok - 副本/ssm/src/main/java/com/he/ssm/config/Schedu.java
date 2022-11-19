@@ -1,29 +1,14 @@
 package com.he.ssm.config;
 
 import com.he.ssm.dao.other.*;
-import com.he.ssm.entity.other.Attach;
-import com.he.ssm.entity.other.Intro;
-import com.he.ssm.entity.other.Video;
 import com.he.ssm.redis.RedisService;
 import com.he.ssm.redis.myPrefixKey.CountKey;
-import com.he.ssm.service.other.AttachService;
-import com.he.ssm.service.other.IntroService;
-import com.he.ssm.service.other.VideoService;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
-import org.apache.poi.ss.formula.functions.Count;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @Author 计算机科学系 吴远健
@@ -60,7 +45,7 @@ public class Schedu {
     public void redis_count_scheduled() {
         //redis data sync to mysql
         if (count_update_sync()) {
-            log.info("redis mysql 数据同步完成!");
+//            log.info("redis mysql 数据同步完成!");
         } else {
             log.error("redis mysql sync fail!");
         }
@@ -94,7 +79,7 @@ public class Schedu {
             Set<String> videoKeys = redisService.getKeysByPrefix("CountKey:" + CountKey.VEDIO_PREFIX_NAME);
             Set<String> introKeys = redisService.getKeysByPrefix("CountKey:" + CountKey.INTRO_PREFIX_NAME);
             Set<String> attachKeys = redisService.getKeysByPrefix("CountKey:" + CountKey.ATTACH_PREFIX_NAME);
-            Set<String> caseKeys = redisService.getKeysByPrefix("CountKey:" + CountKey.CASE_PREFIX_NAME);
+            Set<String> caseKeys = redisService.getKeysByPrefix("CountKey:" + CountKey.CASES_PREFIX_NAME);
             Set<String> practiceKeys = redisService.getKeysByPrefix("CountKey:" + CountKey.PRACTICE_PREFIX_NAME);
             //从redis中获取数据
             for (String key : videoKeys) {
@@ -119,9 +104,9 @@ public class Schedu {
             }
             //
             for (String key : caseKeys) {
-                Long count = redisService.get(CountKey.CASE_TOTAL, key, Long.class);
+                Long count = redisService.get(CountKey.CASES_TOTAL, key, Long.class);
                 //同步到mysql中
-                redisService.delete(CountKey.CASE_TOTAL, key);
+                redisService.delete(CountKey.CASES_TOTAL, key);
                 casesDao.updateCountById(Long.valueOf(key), count);
             }
             //

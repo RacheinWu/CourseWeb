@@ -192,7 +192,6 @@ public class Config implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        System.out.println(Objects.isNull(fileDownloadRecordInterceptor));
-        registry.addInterceptor(fileDownloadRecordInterceptor).addPathPatterns("/**");
+//        registry.addInterceptor(fileDownloadRecordInterceptor).addPathPatterns("/static/res/**");
     }
 }
